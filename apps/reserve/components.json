@@ -1,0 +1,28 @@
+{
+  "$schema": "../../packages/ui/components.json",
+  "components": [
+    "button",
+    "input",
+    "checkbox",
+    "alert-dialog",
+    "card",
+    "form",
+    "avatar",
+    "badge",
+    "breadcrumb",
+    "calendar",
+    "collapsible",
+    "dialog",
+    "drawer",
+    "dropdown-menu",
+    "empty",
+    "field",
+    "hover-card",
+    "item",
+    "kbd",
+    "label",
+    "menubar",
+    "navigation-menu",
+    "pagination"
+  ]
+}
