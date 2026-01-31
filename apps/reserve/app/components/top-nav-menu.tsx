@@ -1,19 +1,11 @@
-
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@workspace/ui/components/navigation-menu"
+} from "@workspace/ui/components/navigation-menu";
 import { Link } from "react-router";
-import {
-  CircleAlertIcon,
-  CircleCheckIcon,
-  CircleDashedIcon,
-} from "lucide-react"
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -51,7 +43,7 @@ const components: { title: string; href: string; description: string }[] = [
     description:
       "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
   },
-]
+];
 
 export function NavigationMenuDemo() {
   return (
@@ -106,7 +98,7 @@ export function NavigationMenuDemo() {
         </NavigationMenuItem> */}
       </NavigationMenuList>
     </NavigationMenu>
-  )
+  );
 }
 
 function ListItem({
@@ -117,10 +109,12 @@ function ListItem({
 }: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
   return (
     <li {...props}>
-      <Link to={href}><div className="flex flex-col gap-1 text-sm">
-          <div className="leading-none font-medium">{title}</div>
-          <div className="text-muted-foreground line-clamp-2">{children}</div>
-        </div></Link>
+      <Link to={href}>
+        <div className="flex flex-col gap-1 text-sm">
+          <div className="font-medium leading-none">{title}</div>
+          <div className="line-clamp-2 text-muted-foreground">{children}</div>
+        </div>
+      </Link>
     </li>
-  )
+  );
 }

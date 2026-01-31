@@ -1,11 +1,29 @@
-import { Form, Link, Outlet } from "react-router";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarInset, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarRail, SidebarTrigger } from "@workspace/ui/components/sidebar";
-import { Separator } from "@workspace/ui/components/separator";
 import { Button } from "@workspace/ui/components/button";
-import type { Route } from "./+types/layout";
-import { ListOrderedIcon, Home, Inbox } from "lucide-react"
+import { Separator } from "@workspace/ui/components/separator";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarTrigger,
+} from "@workspace/ui/components/sidebar";
+import { Home, Inbox, ListOrderedIcon } from "lucide-react";
+import { Form, Link, Outlet } from "react-router";
+import AppLayout, {
+  type NavigationItem,
+  type UserMenu,
+} from "~/components/layout";
 import { NavigationMenuDemo } from "~/components/top-nav-menu";
-
+import type { Route } from "./+types/layout";
 
 // This is sample data.
 const data = {
@@ -15,89 +33,54 @@ const data = {
       title: "Food Pantry",
       url: "",
 
-      items: [{
-        title: "Home",
-        url: "/",
-        icon: Home,
-      },
-      {
-        title: "Reservations",
-        url: "/reservations",
-        icon: ListOrderedIcon,
-      }
-      ]
-    }
-
+      items: [
+        {
+          title: "Home",
+          url: "/",
+          icon: Home,
+        },
+        {
+          title: "Reservations",
+          url: "/reservations",
+          icon: ListOrderedIcon,
+        },
+      ],
+    },
   ],
-}
+};
 export const loader = async ({ request }: Route.LoaderArgs) => {
-  return {};
+  const user: UserMenu = {
+    name: "Tom Cook",
+    email: "tom@example.com",
+    imageUrl:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  };
+
+  const navigation: NavigationItem[] = [
+    { name: "Dashboard", to: "#" },
+    { name: "Reservations", to: "/reservations" },
+    // { name: 'Projects', to: '#' },
+    // { name: 'Calendar', to: '#' },
+  ];
+  const userNavigation: NavigationItem[] = [
+    { name: "Your profile", to: "/profile" },
+    { name: "Settings", to: "/settings" },
+    { name: "Sign out", to: "/signout" },
+  ];
+
+  return { navigation, userNavigation, user };
 };
 
-
-export default function MainLayout() {
+export default function MainLayout({ loaderData }: Route.ComponentProps) {
   return (
     <>
-      <>
-        <SidebarProvider>
-          <AppSidebar />
-          <SidebarInset>
-            <PageHeader />
-            <Outlet />
-          </SidebarInset>
-        </SidebarProvider>
-      </>
+      <AppLayout
+        navigation={loaderData.navigation}
+        userNavigation={loaderData.userNavigation}
+        user={loaderData.user}
+      >
+        <Outlet />
+      </AppLayout>
     </>
-  )
-}
-function PageHeader() {
-
-  return (
-    <header className="flex h-16 shrink-0 items-center px-4 border-b">
-      <SidebarTrigger className=" -ml-1" />
-      <Separator orientation="vertical" className="mr-2 h-4" />
-      <h3 className="text-lg font-semibold">
-        Thomasville Food Pantry
-      </h3>
-      <Separator orientation="vertical" className="mr-2 h-4" />
-      <NavigationMenuDemo />
-    </header>
-  )
-}
-
-
-
-function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  return (
-    <Sidebar {...props}>
-
-      <SidebarContent>
-        {/* We create a SidebarGroup for each parent. */}
-        {data.navMain.map((item) => (
-          <SidebarGroup key={item.title}>
-            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {item.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild >
-                      <Link to={item.url}>
-
-                        <item.icon className="mr-2 h-4 w-4" />
-                        {item.title}
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
-      </SidebarContent>
-      <SidebarRail />
-      <SidebarFooter>
-        {/* <LogOutButton /> */}
-      </SidebarFooter>
-    </Sidebar>
-  )
+  );
 }
