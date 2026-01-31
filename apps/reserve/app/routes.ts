@@ -7,7 +7,7 @@ import {
 
 export default [
   layout("routes/layout.tsx", [
-    index("routes/home.tsx"),
+    index("routes/index-page.tsx"),
     route("/todos", "routes/todos.tsx"),
   ]),
   route("*", "routes/not-found.tsx"),

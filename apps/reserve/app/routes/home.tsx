@@ -3,7 +3,7 @@ import { Github, ListTodo } from "lucide-react";
 import { Link } from "react-router";
 import { env } from "~/lib/env.server";
 import { adapterContext } from "~/workers/app";
-import type { Route } from "./+types/home";
+
 
 export function meta() {
   return [
@@ -12,22 +12,22 @@ export function meta() {
   ];
 }
 
-export function loader({ context }: Route.LoaderArgs) {
-  const { cloudflare } = context.get(adapterContext);
-  return {
-    message: cloudflare.env.VALUE_FROM_CLOUDFLARE,
-    mode: env.ENVIRONMENT,
-  };
-}
+// export function loader({ context }: Route.LoaderArgs) {
+//   const { cloudflare } = context.get(adapterContext);
+//   return {
+//     message: cloudflare.env.VALUE_FROM_CLOUDFLARE,
+//     mode: env.ENVIRONMENT,
+//   };
+// }
 
-export default function Home({ loaderData }: Route.ComponentProps) {
+export default function Home() {
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="mx-auto w-full max-w-lg p-6">
         <p className="font-mono text-muted-foreground">
-          <span className="text-lg">[33m</span> {loaderData.message}
+          <span className="text-lg">[33m</span> {"heelo"}
           {" in "}
-          {loaderData.mode} mode
+          {"mode"} mode
         </p>
         <div className="my-6 flex flex-col gap-2">
           <h1 className="font-semibold text-2xl">Reserve App!</h1>
