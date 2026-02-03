@@ -1,8 +1,8 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
-import type { Route } from "./+types/index-page";
 import type { EventCard } from "~/components/event-card";
 import EventsCard from "~/components/event-card";
 import ReservationsCard from "~/components/reservation-card";
+import type { Route } from "./+types/index-page";
 
 export const loader = async (args: Route.LoaderArgs) => {
   // const { userId } = await requireAuth(args)
@@ -17,15 +17,15 @@ export const loader = async (args: Route.LoaderArgs) => {
     time_slot: "4:00 PM",
   };
 
-	const testEvent: EventCard ={
-		id: "event-1234",
-		name: "Test Event",
-		eventDate: new Date().toISOString(),
-	}
+  const testEvent: EventCard = {
+    id: "event-1234",
+    name: "Test Event",
+    eventDate: new Date().toISOString(),
+  };
 
-  const reservations = [testReservation]
+  const reservations = [testReservation];
 
-	const openEvents = [testEvent]
+  const openEvents = [testEvent];
 
   // const { openEvents, reservations } = await getIndexPageData({ userId });
 
@@ -39,8 +39,8 @@ export const action = async (args: ActionFunctionArgs) => {
 export default function IndexRoute({ loaderData }: Route.ComponentProps) {
   return (
     <>
-      <EventsCard  openEvents={loaderData.openEvents}/>
+      <EventsCard openEvents={loaderData.openEvents} />
       <ReservationsCard reservations={loaderData.reservations} />
     </>
-  )
+  );
 }

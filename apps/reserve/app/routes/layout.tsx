@@ -73,14 +73,12 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 
 export default function MainLayout({ loaderData }: Route.ComponentProps) {
   return (
-    <>
-      <AppLayout
-        navigation={loaderData.navigation}
-        userNavigation={loaderData.userNavigation}
-        user={loaderData.user}
-      >
-        <Outlet />
-      </AppLayout>
-    </>
+    <AppLayout
+      navigation={loaderData.navigation}
+      userNavigation={loaderData.userNavigation}
+      user={loaderData.user}
+    >
+      <Outlet />
+    </AppLayout>
   );
 }

@@ -4,7 +4,6 @@ import { Link } from "react-router";
 import { env } from "~/lib/env.server";
 import { adapterContext } from "~/workers/app";
 
-
 export function meta() {
   return [
     { title: "Reserve App" },

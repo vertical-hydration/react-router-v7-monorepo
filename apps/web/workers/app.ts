@@ -14,17 +14,12 @@ const requestHandler = createRequestHandler(
 );
 
 const generateAppContext = async (env: Env, ctx: ExecutionContext) => {
-
-  // if (!env.DB) {
-  //   throw new Error("env.DB is required but was undefined");
-  // }
-
-
   return {
     cloudflare: {
       env,
       ctx,
     },
+    // @ts-expect-error - Ignore type error for env.DB
     db: drizzle(env.DB, { schema }),
   };
 };

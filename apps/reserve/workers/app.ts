@@ -14,7 +14,6 @@ const requestHandler = createRequestHandler(
 );
 
 const generateAppContext = async (env: Env, ctx: ExecutionContext) => {
-
   return {
     cloudflare: {
       env,

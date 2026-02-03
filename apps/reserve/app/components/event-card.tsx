@@ -1,5 +1,5 @@
-import { Link } from "react-router";
 import { Badge } from "@workspace/ui/components/badge";
+import { Button } from "@workspace/ui/components/button";
 import {
   Card,
   CardContent,
@@ -16,34 +16,32 @@ import {
   TableHeader,
   TableRow,
 } from "@workspace/ui/components/table";
-import { Button } from "@workspace/ui/components/button";
-
+import { Link } from "react-router";
 
 export type EventCard = {
-	id: string;
-	name: string;
-	eventDate: string;
+  id: string;
+  name: string;
+  eventDate: string;
 };
 
-export default function EventsCard({ openEvents }: { openEvents: EventCard[] }) {
-
+export default function EventsCard({
+  openEvents,
+}: {
+  openEvents: EventCard[];
+}) {
   const events = openEvents.map((event) => {
     return {
       ...event,
       eventDate: new Date(event.eventDate).toLocaleDateString(),
-    }
-  })
-
-
+    };
+  });
 
   return (
-    <div className="p-0 md:py-8 md:px-4">
+    <div className="p-0 md:px-4 md:py-8">
       <Card className={" "}>
         <CardHeader>
           <CardTitle>Open for Reservations</CardTitle>
-          <CardDescription>
-            Reserve your spot for an event.
-          </CardDescription>
+          <CardDescription>Reserve your spot for an event.</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
@@ -67,33 +65,26 @@ export default function EventsCard({ openEvents }: { openEvents: EventCard[] }) 
                         width="64"
                       />
                     </TableCell> */}
-                    <TableCell className="font-medium">
-                      {event.name}
-                    </TableCell>
+                    <TableCell className="font-medium">{event.name}</TableCell>
                     <TableCell>
                       <Badge variant="outline">{event.eventDate}</Badge>
                     </TableCell>
                     <TableCell>
                       <Link to={`/events/${event.id}`} className="text-primary">
-                        <Button variant="outline">
-                          Request
-                        </Button>
+                        <Button variant="outline">Request</Button>
                       </Link>
                     </TableCell>
                   </TableRow>
-                )
+                );
               })}
             </TableBody>
           </Table>
         </CardContent>
         {/* <pre>{JSON.stringify(events, null, 2)}</pre> */}
         <CardFooter>
-          <div className="text-xs text-muted-foreground">
-
-          </div>
+          <div className="text-muted-foreground text-xs" />
         </CardFooter>
       </Card>
     </div>
-
-  )
+  );
 }
