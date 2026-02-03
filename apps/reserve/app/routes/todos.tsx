@@ -1,7 +1,17 @@
-import { data } from "react-router";
+import { data, Form, Link, useFetcher, useNavigation } from "react-router";
 import { z } from "zod";
 import { adapterContext } from "~/workers/app";
 import type { Route } from "./+types/todos";
+import { Checkbox } from "@workspace/ui/components/checkbox";
+import { cn } from "@workspace/ui/lib/utils";
+import { Button, buttonVariants } from "@workspace/ui/components/button";
+import { ArrowLeft, ListTodoIcon, TrashIcon } from "lucide-react";
+import { useState } from "react";
+import type { SelectTodo } from "@workspace/db";
+import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import { Input } from "@headlessui/react";
+import { formatDate } from "@workspace/shared/utils";
+import { getZodConstraint, parseWithZod } from "@conform-to/zod";
 
 export const schema = z.discriminatedUnion("intent", [
   z.object({
@@ -38,4 +48,144 @@ export async function loader({ context }: Route.LoaderArgs) {
 export async function action({ request, context }: Route.ActionArgs) {
   const formData = await request.formData();
   // ...existing code...
+}
+
+export default function TodosRoute({
+  loaderData: { todos },
+  actionData,
+}: Route.ComponentProps) {
+  const [form, fields] = useForm({
+    onValidate({ formData }) {
+      return parseWithZod(formData, { schema });
+    },
+    lastResult: actionData,
+    constraint: getZodConstraint(schema),
+    shouldRevalidate: "onInput",
+  });
+
+  const navigation = useNavigation();
+  const isSubmitting =
+    navigation.state !== "idle" &&
+    navigation.formData?.get("intent") === "createTodo";
+
+  return (
+    <>
+      <div className="p-6">
+        <Link
+          to="/"
+          className={buttonVariants({ variant: "ghost", size: "sm" })}
+        >
+          <ArrowLeft />
+          Back
+        </Link>
+      </div>
+      <div className="mx-auto max-w-2xl space-y-6 p-6 sm:space-y-12 sm:p-12">
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h1 className="flex items-center gap-2 font-semibold text-lg leading-none">
+              <ListTodoIcon className="size-5 opacity-60" />
+              Todo List
+            </h1>
+            <div className="text-muted-foreground text-sm">
+              Today is {formatDate(new Date(), "MMMM d, yyyy")}
+            </div>
+          </div>
+
+          {/* Form */}
+          <Form method="POST" className="space-y-2" {...getFormProps(form)}>
+            <div className="flex gap-2">
+              <Input
+                placeholder="Add a todo"
+                {...getInputProps(fields.title, { type: "text" })}
+              />
+              <input type="hidden" name="intent" value="createTodo" />
+              <Button type="submit" disabled={isSubmitting}>
+                Add
+              </Button>
+            </div>
+            {fields.title.errors && (
+              <p
+                className="mt-2 text-destructive text-xs"
+                role="alert"
+                aria-live="polite"
+              >
+                {fields.title.errors.join(", ")}
+              </p>
+            )}
+          </Form>
+
+          {/* Todos */}
+          {todos.length === 0 ? (
+            <p className="text-muted-foreground text-sm">No todos found</p>
+          ) : (
+            <ul className="divide-y overflow-hidden rounded-lg border shadow-xs">
+              {todos.map((todo: SelectTodo) => (
+                <TodoItem key={todo.id} todo={todo} />
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
+
+function TodoItem({ todo }: { todo: SelectTodo }) {
+  const fetcher = useFetcher();
+  const [isChecked, setIsChecked] = useState(todo.completed);
+  const isSubmitting = fetcher.state !== "idle";
+  const id = todo.id.toString();
+
+  return (
+    <li
+      key={todo.id}
+      className="flex items-center gap-2 p-2 pl-3 hover:bg-accent"
+    >
+      <label htmlFor={todo.id.toString()} className="flex items-center gap-2">
+        <Checkbox
+          id={id}
+          name={id}
+          disabled={isSubmitting}
+          checked={isChecked}
+          onCheckedChange={() => {
+            setIsChecked(!isChecked);
+            fetcher.submit(
+              {
+                intent: "toggleTodo",
+                id,
+              },
+              { method: "POST", preventScrollReset: true },
+            );
+          }}
+        />
+        <span
+          className={cn("font-medium", {
+            "text-muted-foreground line-through": isChecked,
+          })}
+        >
+          {todo.title}
+        </span>
+      </label>
+      <Button
+        type="submit"
+        name="intent"
+        value="deleteTodo"
+        className="ml-auto size-8 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+        size="icon"
+        variant="ghost"
+        disabled={isSubmitting}
+        onClick={() => {
+          fetcher.submit(
+            {
+              intent: "deleteTodo",
+              id,
+            },
+            { method: "POST", preventScrollReset: true },
+          );
+        }}
+      >
+        <TrashIcon className="size-4" />
+      </Button>
+    </li>
+  );
 }
