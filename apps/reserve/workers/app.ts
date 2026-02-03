@@ -14,18 +14,13 @@ const requestHandler = createRequestHandler(
 );
 
 const generateAppContext = async (env: Env, ctx: ExecutionContext) => {
-  const envDb = () => {
-    if (!env.DB) {
-      throw new Error("env.DB is required but was undefined");
-    }
-    return env.DB;
-  };
+
   return {
     cloudflare: {
       env,
       ctx,
     },
-    db: drizzle(envDb(), { schema }),
+    db: drizzle(env.DB, { schema }),
   };
 };
 
