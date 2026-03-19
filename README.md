@@ -2,6 +2,11 @@
 
 This is a streamlined example demonstrating the use of React Router v7 within a monorepo, integrating Cloudflare Workers, Drizzle ORM with D1, Shadcn/UI, and Tailwind CSS v4.
 
+## Branches
+- devtest feature start
+- rc release candidate for cloudflare integration
+- main stable working on cloudflare
+
 ## Features
 
 - 📦 pnpm – Monorepo package manager
