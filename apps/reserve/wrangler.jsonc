@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "rrv7-monorepo-reserve",
+  "name": "reserve",
   "main": "./workers/app.ts",
 
   "compatibility_date": "2025-04-04",
