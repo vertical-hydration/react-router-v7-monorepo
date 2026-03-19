@@ -1,7 +1,13 @@
 import type { Config } from "drizzle-kit";
+import { defineConfig } from "drizzle-kit";
 
-export default {
+const LOCAL_DB_PATH = String(process.env.LOCAL_DB_PATH || "");
+
+export default defineConfig({
   schema: "./src/schema/*.ts",
   out: "./migrations",
   dialect: "sqlite",
-} satisfies Config;
+  dbCredentials: {
+    url: LOCAL_DB_PATH,
+  },
+});

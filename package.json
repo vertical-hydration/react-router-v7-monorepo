@@ -12,10 +12,12 @@
     "db:apply": "pnpm --filter @workspace/db db:apply",
     "db:apply-prod": "pnpm --filter @workspace/db db:apply-prod",
     "db:apply-preview": "pnpm --filter @workspace/db db:apply-preview",
+    "db:studio": "LOCAL_DB_PATH=$(find .wrangler/state/v3/d1/miniflare-D1DatabaseObject -type f -name '*.sqlite' | head -n 1) drizzle-kit studio",
     "typegen": "pnpm -r typegen",
     "typecheck": "pnpm -r typecheck",
     "check": "biome check .",
     "check:fix": "biome check --fix .",
+    "check:fixmax": "biome check --fix --max-diagnostics=50 .",
     "clean": "rm -rf node_modules && pnpm -r exec -- rm -rf node_modules && rm pnpm-lock.yaml"
   },
   "devDependencies": {

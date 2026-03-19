@@ -1,0 +1,30 @@
+@import "@workspace/ui/globals.css";
+
+/*
+ * Current app theme variables here.
+ */
+
+@theme {
+  --font-sans:
+    "Geist", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+}
+
+:root {
+  --primary: var(--color-blue-600);
+  --primary-foreground: var(--color-blue-50);
+  --ring: var(--color-blue-300);
+}
+
+.dark {
+  --primary: var(--color-blue-500);
+  --primary-foreground: var(--color-blue-50);
+  --ring: var(--color-blue-300);
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground text-sm antialiased;
+  }
+}

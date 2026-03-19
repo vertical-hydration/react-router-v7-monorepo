@@ -19,7 +19,6 @@ const generateAppContext = async (env: Env, ctx: ExecutionContext) => {
       env,
       ctx,
     },
-    // @ts-expect-error - Ignore type error for env.DB
     db: drizzle(env.DB, { schema }),
   };
 };
