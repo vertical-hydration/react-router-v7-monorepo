@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "react-router dev",
     "build": "react-router build",
-    "preview": "npm run build && vite preview",
+    "preview": "pnpm run build && vite preview",
     "deploy": "react-router build && NODE_ENV=production wrangler deploy",
     "deploy:preview": "react-router build && NODE_ENV=preview wrangler deploy --env preview",
     "deploy:version": "react-router build && wrangler versions upload",
