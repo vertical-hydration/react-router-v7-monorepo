@@ -13,14 +13,11 @@
     "enabled": true
   },
 
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "rrv7-monorepo",
-      "database_id": "d1_db_id",
-      "preview_database_id": "d1_db_preview_id"
-    }
-  ],
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "rrv7-monorepo",
+    "database_id": "50f69dd7-e632-4a6d-9cdd-6b1d79db90d8"
+  }],
 
   "vars": {
     "ENVIRONMENT": "production",

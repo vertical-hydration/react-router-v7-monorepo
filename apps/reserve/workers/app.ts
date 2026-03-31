@@ -1,5 +1,4 @@
-import * as schema from "@workspace/db";
-import { drizzle } from "drizzle-orm/d1";
+import { createDb } from "@workspace/db";
 import {
   createContext,
   createRequestHandler,
@@ -14,12 +13,16 @@ const requestHandler = createRequestHandler(
 );
 
 const generateAppContext = async (env: Env, ctx: ExecutionContext) => {
+  if (!env.DB) {
+    throw new Error("Missing Cloudflare D1 binding: DB");
+  }
+
   return {
     cloudflare: {
       env,
       ctx,
     },
-    db: drizzle(env.DB, { schema }),
+    db: createDb(env.DB),
   };
 };
 
