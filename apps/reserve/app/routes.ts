@@ -11,5 +11,6 @@ export default [
     route("/todos", "routes/todos.tsx"),
   ]),
   route("*", "routes/not-found.tsx"),
-  route("/api/auth/*", "routes/api.auth.ts")
+  route("/api/auth/*", "routes/api.auth.ts"),
+  route("/login", "routes/login.tsx")
 ] satisfies RouteConfig;
