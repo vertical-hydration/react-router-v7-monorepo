@@ -7,7 +7,10 @@ import { z } from "zod";
 const serverEnvSchema = z.object({
   ENVIRONMENT: z.enum(["development", "preview", "production"]),
   VALUE_FROM_CLOUDFLARE: z.string().min(1),
-  // Add other server-only variables here...
+  BETTER_AUTH_URL: z.string().url(),
+  BETTER_AUTH_TRUSTED_ORIGINS: z.string().optional(),
+  DISCORD_CLIENT_ID: z.string().min(1),
+  DISCORD_CLIENT_SECRET: z.string().min(1),
 });
 
 /**

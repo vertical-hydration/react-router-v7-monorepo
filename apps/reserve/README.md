@@ -16,6 +16,20 @@ A modern, production-ready template for building full-stack React applications u
 
 For detailed setup instructions, configuration options, and advanced usage, refer to the [project documentation](./docs/README.md).
 
+## Discord OAuth Setup (Local + Production)
+
+1. Configure Better Auth environment variables:
+	- `BETTER_AUTH_URL`
+	- `BETTER_AUTH_TRUSTED_ORIGINS` (comma-separated origins)
+	- `DISCORD_CLIENT_ID`
+	- `DISCORD_CLIENT_SECRET`
+
+2. In Discord Developer Portal, add **Redirect URIs**:
+	- `http://localhost:5173/api/auth/callback/discord`
+	- `https://your-production-domain.com/api/auth/callback/discord`
+
+3. Ensure the callback origin is also present in `BETTER_AUTH_TRUSTED_ORIGINS`.
+
 ## Getting Started
 
 ### Installation

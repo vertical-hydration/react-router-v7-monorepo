@@ -21,14 +21,18 @@
 
   "vars": {
     "ENVIRONMENT": "production",
-    "VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare"
+    "VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare",
+    "BETTER_AUTH_URL": "https://reserve.foodpantrythomasville.org",
+    "BETTER_AUTH_TRUSTED_ORIGINS": "https://reserve.foodpantrythomasville.org"
   },
 
   "env": {
     "preview": {
       "vars": {
         "ENVIRONMENT": "preview",
-        "VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare (Preview)"
+        "VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare (Preview)",
+        "BETTER_AUTH_URL": "https://preview.reserve.foodpantrythomasville.org",
+        "BETTER_AUTH_TRUSTED_ORIGINS": "https://preview.reserve.foodpantrythomasville.org"
       }
     }
   }

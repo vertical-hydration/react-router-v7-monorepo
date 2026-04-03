@@ -1,6 +1,22 @@
-import { useSearchParams } from "react-router";
+import { redirect, useSearchParams } from "react-router";
 import { authClient } from "~/lib/auth-client";
+import { createAuth } from "~/lib/auth.server";
+import { adapterContext } from "~/workers/app";
 import type { Route } from "./+types/login";
+
+export async function loader({ request, context }: Route.LoaderArgs) {
+  const { db } = context.get(adapterContext);
+  const auth = createAuth(db);
+  const session = await auth.api.getSession({ headers: request.headers });
+
+  if (session) {
+    const url = new URL(request.url);
+    const redirectUrl = url.searchParams.get("redirectUrl") || "/";
+    throw redirect(redirectUrl);
+  }
+
+  return null;
+}
 
 
 

@@ -20,13 +20,17 @@
   ],
   "vars": {
     "ENVIRONMENT": "production",
-    "VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare"
+    "VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare",
+    "BETTER_AUTH_URL": "https://your-production-domain.com",
+    "BETTER_AUTH_TRUSTED_ORIGINS": "https://your-production-domain.com"
   },
   "env": {
     "preview": {
       "vars": {
         "ENVIRONMENT": "preview",
-        "VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare (Preview)"
+        "VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare (Preview)",
+        "BETTER_AUTH_URL": "https://your-preview-domain.com",
+        "BETTER_AUTH_TRUSTED_ORIGINS": "https://your-preview-domain.com"
       }
     }
   }

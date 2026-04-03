@@ -15,6 +15,13 @@
       "when": 1770071509877,
       "tag": "0001_soft_trish_tilby",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1775253340497,
+      "tag": "0002_robust_firelord",
+      "breakpoints": true
     }
   ]
 }

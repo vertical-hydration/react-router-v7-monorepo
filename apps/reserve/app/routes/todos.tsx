@@ -8,8 +8,9 @@ import { Checkbox } from "@workspace/ui/components/checkbox";
 import { cn } from "@workspace/ui/lib/utils";
 import { ArrowLeft, ListTodoIcon, TrashIcon } from "lucide-react";
 import { useState } from "react";
-import { data, Form, Link, useFetcher, useNavigation } from "react-router";
+import { data, Form, Link, redirect, useFetcher, useNavigation } from "react-router";
 import { z } from "zod";
+import { createAuth } from "~/lib/auth.server";
 import { adapterContext } from "~/workers/app";
 import type { Route } from "./+types/todos";
 
@@ -37,8 +38,17 @@ export const schema = z.discriminatedUnion("intent", [
 
 export const meta: Route.MetaFunction = () => [{ title: "Todo List" }];
 
-export async function loader({ context }: Route.LoaderArgs) {
+export async function loader({ request, context }: Route.LoaderArgs) {
   const { db } = context.get(adapterContext);
+  const auth = createAuth(db);
+  const session = await auth.api.getSession({ headers: request.headers });
+
+  if (!session) {
+    const url = new URL(request.url);
+    const redirectUrl = `${url.pathname}${url.search}`;
+    throw redirect(`/login?redirectUrl=${encodeURIComponent(redirectUrl)}`);
+  }
+
   const todos = await db.query.todosTable.findMany({
     orderBy: (todos, { desc }) => [desc(todos.createdAt)],
   });
@@ -46,6 +56,16 @@ export async function loader({ context }: Route.LoaderArgs) {
 }
 
 export async function action({ request, context }: Route.ActionArgs) {
+  const { db } = context.get(adapterContext);
+  const auth = createAuth(db);
+  const session = await auth.api.getSession({ headers: request.headers });
+
+  if (!session) {
+    const url = new URL(request.url);
+    const redirectUrl = `${url.pathname}${url.search}`;
+    throw redirect(`/login?redirectUrl=${encodeURIComponent(redirectUrl)}`);
+  }
+
   const formData = await request.formData();
   // ...existing code...
 }

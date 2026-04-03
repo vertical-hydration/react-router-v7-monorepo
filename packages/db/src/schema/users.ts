@@ -6,11 +6,15 @@ export const usersTable = sqliteTable("users", {
   id: autoIncrementId("id"),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
-  emailVerified: integer("emailVerified", { mode: "boolean" }).notNull(),
+  emailVerified: integer("emailVerified", { mode: "boolean" })
+    .notNull()
+    .default(false),
   image: text("image"),
   createdAt,
   updatedAt,
 });
+
+export const users = usersTable;
 
 // Types
 export type SelectUser = typeof usersTable.$inferSelect;
