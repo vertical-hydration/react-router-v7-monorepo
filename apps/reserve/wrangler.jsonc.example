@@ -15,7 +15,8 @@
       "binding": "DB",
       "database_name": "rrv7-monorepo",
       "database_id": "d1_db_id",
-      "preview_database_id": "d1_db_preview_id"
+      "preview_database_id": "d1_db_preview_id",
+      "migrations_dir": "../../packages/db/migrations"
     }
   ],
   "vars": {

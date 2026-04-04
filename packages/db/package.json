@@ -7,10 +7,11 @@
     "db:drop": "drizzle-kit drop",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:apply": "wrangler d1 migrations apply DB --local --persist-to=../../.wrangler/state",
-    "db:apply-prod": "wrangler d1 migrations apply DB --remote",
-    "db:apply-preview": "wrangler d1 migrations apply DB --remote --env preview",
-    "db:studio": "LOCAL_DB_PATH=$(find ../../.wrangler/state -type f -name '*.sqlite' | head -n 1) drizzle-kit studio",
+    "db:apply": "wrangler d1 migrations apply DB --local --config ../../apps/reserve/wrangler.jsonc --persist-to ../../.wrangler/state && wrangler d1 migrations apply DB --local --config ../../apps/reserve/wrangler.jsonc --persist-to ../../apps/reserve/.wrangler/state",
+    "db:apply-prod": "wrangler d1 migrations apply DB --remote --config ../../apps/reserve/wrangler.jsonc",
+    "db:apply-preview": "wrangler d1 migrations apply DB --remote --env preview --config ../../apps/reserve/wrangler.jsonc",
+    "db:which-local": "sh ./scripts/db-which-local.sh",
+    "db:studio": "sh ./scripts/db-studio.sh",
     "typecheck": "tsc --noEmit"
   },
   "exports": {
