@@ -10,6 +10,7 @@
     "db:apply": "wrangler d1 migrations apply DB --local --config ../../apps/reserve/wrangler.jsonc --persist-to ../../.wrangler/state && wrangler d1 migrations apply DB --local --config ../../apps/reserve/wrangler.jsonc --persist-to ../../apps/reserve/.wrangler/state",
     "db:apply-prod": "wrangler d1 migrations apply DB --remote --config ../../apps/reserve/wrangler.jsonc",
     "db:apply-preview": "wrangler d1 migrations apply DB --remote --env preview --config ../../apps/reserve/wrangler.jsonc",
+    "db:doctor": "sh ./scripts/db-doctor.sh",
     "db:which-local": "sh ./scripts/db-which-local.sh",
     "db:studio": "sh ./scripts/db-studio.sh",
     "typecheck": "tsc --noEmit"
